@@ -1,12 +1,14 @@
 import { useState } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import { useSelector, useDispatch } from 'react-redux';
 import s from './ContactForm.module.css';
-import * as actions from '../../redux/actions';
+import { addContact } from '../../redux/Contacts/contacts-actions';
+import { getContacts } from '../../redux/Contacts/contacts-selectors';
 
-function ContactForm({ contacts, addContact }) {
+export default function ContactForm() {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
+  const contacts = useSelector(getContacts);
+  const dispatch = useDispatch();
 
   const handleChange = e => {
     switch (e.target.name) {
@@ -44,7 +46,7 @@ function ContactForm({ contacts, addContact }) {
     } else if (!/\d{3}[-]\d{2}[-]\d{2}/g.test(number)) {
       alert('💩 Enter the correct number phone!');
     } else {
-      addContact(contact);
+      dispatch(addContact(contact));
     }
 
     setName('');
@@ -81,21 +83,3 @@ function ContactForm({ contacts, addContact }) {
     </form>
   );
 }
-
-const mapStateToProps = state => {
-  return {
-    contacts: state.contacts.items,
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    addContact: contact => dispatch(actions.addContact(contact)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ContactForm);
-
-ContactForm.propTypes = {
-  addContact: PropTypes.func.isRequired,
-};

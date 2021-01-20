@@ -1,9 +1,11 @@
 import { connect } from 'react-redux';
+import { useEffect } from 'react';
 import './App.css';
 import Container from './components/Container/Container';
 import ContactForm from './components/ContactForm/ContactForm';
 import ContactsList from './components/ContactsList/ContactsList';
 import Filter from './components/Filter/Filter';
+import storage from './services/StorageServices';
 
 // storage.save('Contacts', [
 //   { id: shortid.generate(), name: 'Rosie Simpson', number: '459-12-56' },
@@ -13,6 +15,10 @@ import Filter from './components/Filter/Filter';
 // ]);
 
 function App({ contacts }) {
+  useEffect(() => {
+    storage.save('Contacts', contacts);
+  }, [contacts]);
+
   return (
     <Container>
       <h1>Phonebook</h1>
