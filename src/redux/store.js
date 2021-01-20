@@ -1,5 +1,5 @@
-import { createStore, combineReducers } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
+import { combineReducers } from 'redux';
+import { configureStore } from '@reduxjs/toolkit';
 import { itemsReducer } from './Contacts/contacts-reducer';
 import { filterReducer } from './Filter/filter-reducer';
 
@@ -12,6 +12,8 @@ const rootReduucer = combineReducers({
   contacts: contactsReduucer,
 });
 
-const store = createStore(rootReduucer, composeWithDevTools());
+const store = configureStore({
+  reducer: rootReduucer,
+});
 
 export default store;
