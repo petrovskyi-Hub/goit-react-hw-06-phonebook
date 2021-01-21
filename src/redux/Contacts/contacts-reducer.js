@@ -1,9 +1,8 @@
-import { addContact, deleteContact } from './contacts-actions';
 import { createReducer } from '@reduxjs/toolkit';
 import shortid from 'shortid';
-import storage from '../../services/StorageServices';
+import { addContact, deleteContact } from './contacts-actions';
 
-export const itemsReducer = createReducer(storage.load('Contacts') ?? [], {
+export const itemsReducer = createReducer([], {
   [addContact]: (state, action) => {
     const contact = {
       id: shortid.generate(),
